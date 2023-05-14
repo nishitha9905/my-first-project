@@ -2,6 +2,8 @@ import * as React from "react";
 import { useState ,useEffect} from 'react';
 import './App.css';
 import { HelloWorld,ByeWorld } from './components/sample';
+import { BrowserRouter as Route,Routes,Link, Router } from "react-router-dom";
+import Contact from './components/contact';
 function App() {
   const [counter,setCounter] = useState(0);
   const updateCounter = () =>{
@@ -13,16 +15,27 @@ function App() {
 },[counter])
   return (
     <div className="App">
+      <Router>
     <nav>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/contact">Contact Us</a>
+    <Link to="/">Home</Link>
+    <Link to="/about">About</Link>
+    <Link to="/contact">Contact Us</Link>
       </nav>
-      <h1>hello world</h1>
-      <HelloWorld/>
-      <ByeWorld/>
-      <h1>{counter}</h1>
-      <button onClick={updateCounter}>Click me</button>
+      <Routes>
+      <Route exact path="/" render= {() => (
+        <>
+         <h1>hello world</h1>
+         <HelloWorld/>
+         <ByeWorld/>
+         <h1>{counter}</h1>
+         <button onClick={updateCounter}>Click me</button>
+         </>
+      )}/>
+      </Routes>
+      <Routes>
+      <Route  exact path="/contact" element={<Contact/>}/>
+      </Routes>
+      </Router>
     </div>
   );
 }
